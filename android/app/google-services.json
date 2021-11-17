@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1053358676695",
+    "project_id": "allwork-gigfinder",
+    "storage_bucket": "allwork-gigfinder.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1053358676695:android:96f56e09dbb52a018bae92",
+        "android_client_info": {
+          "package_name": "com.example.allwork"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1053358676695-pr2rhblrdq5e82r9uoab44vpca4vsi4q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.allwork",
+            "certificate_hash": "84ddcb8927b4986215ceaa8cb21dbc395fcaea5e"
+          }
+        },
+        {
+          "client_id": "1053358676695-3r830bnfra5bn7fauh71b2oapth5pctd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQzwHC9t9nTVIjXmEoJZOfj01t8EOj59E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1053358676695-3r830bnfra5bn7fauh71b2oapth5pctd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -6,6 +6,7 @@ final ThemeData apptheme = ThemeData(
   textTheme: textTheme,
   elevatedButtonTheme: elevatedButtonTheme,
   outlinedButtonTheme: outlinedButtonTheme,
+  visualDensity: VisualDensity.adaptivePlatformDensity,
 );
 
 // color
