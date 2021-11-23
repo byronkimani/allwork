@@ -1,11 +1,11 @@
 import 'package:allwork/constants/string_constants.dart';
 import 'package:allwork/constants/theme.dart';
-import 'package:allwork/presentation/features/onboarding/widgets/login_form.dart';
 import 'package:allwork/presentation/features/onboarding/widgets/onboarding_pages_background.dart';
+import 'package:allwork/presentation/features/onboarding/widgets/registration_form.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage();
+class CreateAccountPage extends StatelessWidget {
+  const CreateAccountPage();
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class LoginPage extends StatelessWidget {
           Container(
             width: double.infinity,
             height: containerHeight,
-            padding: const EdgeInsets.fromLTRB(25, 30, 25, 10),
+            padding: const EdgeInsets.fromLTRB(25, 15, 25, 10),
             decoration: const BoxDecoration(
               color: whiteColor,
               borderRadius: BorderRadius.only(
@@ -33,7 +33,7 @@ class LoginPage extends StatelessWidget {
             child: ListView(
               children: const <Widget>[
                 Text(
-                  welcome,
+                  createAccount,
                   style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.w900,
@@ -42,14 +42,22 @@ class LoginPage extends StatelessWidget {
                 ),
                 SizedBox(height: 5),
                 Text(
-                  loginTitle,
+                  createAccountTitle,
                   style: TextStyle(
                     fontSize: 20,
                     color: accentColor,
                   ),
                 ),
-                SizedBox(height: 30),
-                LoginForm()
+                SizedBox(height: 5),
+                Text(
+                  createAccountSubtitle,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: accentColor,
+                  ),
+                ),
+                SizedBox(height: 10),
+                RegistrationForm()
               ],
             ),
           )
