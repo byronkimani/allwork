@@ -1,4 +1,5 @@
 import 'package:allwork/presentation/features/error/page_not_found.dart';
+import 'package:allwork/presentation/features/main/pages/main_screen.dart';
 import 'package:allwork/presentation/features/onboarding/pages/create_account_page.dart';
 import 'package:allwork/presentation/features/onboarding/pages/login_page.dart';
 import 'package:allwork/presentation/features/onboarding/pages/onboarding_pages.dart';
@@ -27,6 +28,11 @@ class AppRouter {
       case createAccountPageRoute:
         return MaterialPageRoute<CreateAccountPage>(
           builder: (_) => const CreateAccountPage(),
+        );
+
+      case mainScreenRoute:
+        return MaterialPageRoute<MainScreeen>(
+          builder: (_) => const MainScreeen(),
         );
 
       default:

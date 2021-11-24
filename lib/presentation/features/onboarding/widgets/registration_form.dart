@@ -52,7 +52,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
               decoration: inputDecoration.copyWith(labelText: 'Phone Number'),
               style: const TextStyle(fontSize: 14),
               validator: (String? number) =>
-                  validateName(number.toString().trim()),
+                  validatePhoneNumber(number.toString().trim()),
               onSaved: (String? value) => phoneNumber = value.toString().trim(),
             ),
             // password
@@ -79,16 +79,16 @@ class _RegistrationFormState extends State<RegistrationForm> {
             // create account button
             ElevatedButton(
               onPressed: () async {
-                formKey.currentState!.validate();
-                formKey.currentState!.save();
-
-                await registerNewUser(
-                  context: context,
-                  phoneNumber: phoneNumber!,
-                  name: name!,
-                  email: email!,
-                  password: password!,
-                );
+                if (formKey.currentState!.validate()) {
+                  formKey.currentState!.save();
+                  await registerNewUser(
+                    context: context,
+                    phoneNumber: phoneNumber!,
+                    name: name!,
+                    email: email!,
+                    password: password!,
+                  );
+                }
               },
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(

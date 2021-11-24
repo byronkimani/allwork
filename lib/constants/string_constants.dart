@@ -38,7 +38,15 @@ const String makeSurePasswordsMatch = 'Make sure passwords match';
 const String pleaseEnterName = 'Please enter name';
 const String pleaseEnterDescription = 'Please enter description';
 const String pleaseEnterField = 'Please fill up this field';
+const String pleaseInputValidPhone = 'Please input a valid phone number';
 
 // validate email regex
 const String emailRegex =
     r"""^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+""";
+// validate phone number regex
+const String phoneRegex =
+    r'''^(?:254|\+254|0)?((7|1)(?:(?:[0-9][0-9])|(?:0[0-8])|(4[0-1]))[0-9]{6})$''';
+
+// registration page
+const String accountCreatedSuccess =
+    'Congratulations account created successfully!';

@@ -49,6 +49,19 @@ String? validateString(String? input) {
   }
 }
 
+String? validatePhoneNumber(String? input) {
+  if (input != null || input!.isNotEmpty) {
+    if (RegExp(phoneRegex).hasMatch(input)) {
+      return null;
+    } else {
+      return pleaseInputValidPhone;
+    }
+  }
+  return pleaseInputValidPhone;
+}
+
 void displaytoastMessage({required String message}) {
-  Fluttertoast.showToast(msg: message, );
+  Fluttertoast.showToast(
+    msg: message,
+  );
 }
