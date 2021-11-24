@@ -30,3 +30,15 @@ const String createAccountTitle = 'Hello there!';
 const String createAccountSubtitle = 'Lets get you set up real quick!';
 const String alreadyHaveAnAccount = 'Already have an account';
 const String signInHere = 'Sign In here';
+
+//validation strings
+const String pleaseInputValidEmail = 'Please input a valid email';
+const String passwordTooShort = 'Password too short';
+const String makeSurePasswordsMatch = 'Make sure passwords match';
+const String pleaseEnterName = 'Please enter name';
+const String pleaseEnterDescription = 'Please enter description';
+const String pleaseEnterField = 'Please fill up this field';
+
+// validate email regex
+const String emailRegex =
+    r"""^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+""";
