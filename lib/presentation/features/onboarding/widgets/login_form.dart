@@ -1,3 +1,4 @@
+import 'package:allwork/business_logic/core/helpers.dart';
 import 'package:allwork/constants/string_constants.dart';
 import 'package:allwork/constants/theme.dart';
 import 'package:allwork/presentation/router/routes.dart';
@@ -23,24 +24,22 @@ class _LoginFormState extends State<LoginForm> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: <Widget>[
-            const TextField(
+            // email
+            TextFormField(
               keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                labelText: 'Email',
-                labelStyle: TextStyle(fontSize: 14),
-                hintStyle: TextStyle(color: Colors.grey, fontSize: 10),
-              ),
-              style: TextStyle(fontSize: 14),
+              decoration: inputDecoration.copyWith(labelText: 'Email'),
+              style: const TextStyle(fontSize: 14),
+              validator: (String? email) =>
+                  validateEmail(email.toString().trim()),
             ),
+            // password
             const SizedBox(height: 10),
-            const TextField(
+            TextFormField(
               obscureText: true,
-              decoration: InputDecoration(
-                labelText: 'password',
-                labelStyle: TextStyle(fontSize: 14),
-                hintStyle: TextStyle(color: Colors.grey, fontSize: 10),
-              ),
-              style: TextStyle(fontSize: 14),
+              decoration: inputDecoration.copyWith(labelText: 'Password'),
+              style: const TextStyle(fontSize: 14),
+              validator: (String? pass) =>
+                  validatePassword(pass.toString().trim()),
             ),
             const SizedBox(height: 30),
             ElevatedButton(

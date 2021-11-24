@@ -51,16 +51,8 @@ final OutlinedButtonThemeData outlinedButtonTheme = OutlinedButtonThemeData(
 
 //input decoration
 const InputDecoration inputDecoration = InputDecoration(
-  labelStyle: TextStyle(color: accentColor),
-  enabledBorder: UnderlineInputBorder(
-    borderSide: BorderSide(color: accentColor, width: 1.5),
-  ),
-  focusedBorder: UnderlineInputBorder(
-    borderSide: BorderSide(color: accentColor, width: 1.5),
-  ),
-  border: UnderlineInputBorder(
-    borderSide: BorderSide(color: accentColor, width: 1.5),
-  ),
+  labelStyle: TextStyle(fontSize: 14),
+  hintStyle: TextStyle(color: Colors.grey, fontSize: 10),
 );
 
 const InputDecoration addItemInputDecoration = InputDecoration(

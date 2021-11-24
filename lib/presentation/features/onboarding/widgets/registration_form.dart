@@ -1,5 +1,7 @@
+import 'package:allwork/business_logic/core/helpers.dart';
 import 'package:allwork/constants/string_constants.dart';
 import 'package:allwork/constants/theme.dart';
+import 'package:allwork/infrastructure/api_calls.dart';
 import 'package:allwork/presentation/router/routes.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +14,10 @@ class RegistrationForm extends StatefulWidget {
 
 class _RegistrationFormState extends State<RegistrationForm> {
   final GlobalKey<FormState> formKey = GlobalKey();
+  String? name;
+  String? phoneNumber;
+  String? email;
+  String? password;
 
   @override
   Widget build(BuildContext context) {
@@ -23,54 +29,67 @@ class _RegistrationFormState extends State<RegistrationForm> {
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Column(
           children: <Widget>[
-            const TextField(
+            // name
+            TextFormField(
               keyboardType: TextInputType.text,
-              decoration: InputDecoration(
-                labelText: 'Name',
-                labelStyle: TextStyle(fontSize: 14),
-                hintStyle: TextStyle(color: Colors.grey, fontSize: 10),
-              ),
-              style: TextStyle(fontSize: 14),
+              decoration: inputDecoration.copyWith(labelText: 'Name'),
+              style: const TextStyle(fontSize: 14),
+              validator: (String? name) => validateName(name.toString().trim()),
+              onSaved: (String? value) => name = value.toString().trim(),
             ),
-            const TextField(
+            // email
+            TextFormField(
               keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                labelText: 'Email',
-                labelStyle: TextStyle(fontSize: 14),
-                hintStyle: TextStyle(color: Colors.grey, fontSize: 10),
-              ),
-              style: TextStyle(fontSize: 14),
+              decoration: inputDecoration.copyWith(labelText: 'Email'),
+              style: const TextStyle(fontSize: 14),
+              validator: (String? email) =>
+                  validateEmail(email.toString().trim()),
+              onSaved: (String? value) => email = value.toString().trim(),
             ),
-            const TextField(
+            // phone number
+            TextFormField(
               keyboardType: TextInputType.text,
-              decoration: InputDecoration(
-                labelText: 'Phone Number',
-                labelStyle: TextStyle(fontSize: 14),
-                hintStyle: TextStyle(color: Colors.grey, fontSize: 10),
-              ),
-              style: TextStyle(fontSize: 14),
+              decoration: inputDecoration.copyWith(labelText: 'Phone Number'),
+              style: const TextStyle(fontSize: 14),
+              validator: (String? number) =>
+                  validateName(number.toString().trim()),
+              onSaved: (String? value) => phoneNumber = value.toString().trim(),
             ),
-            const TextField(
+            // password
+            TextFormField(
               obscureText: true,
-              decoration: InputDecoration(
-                labelText: 'password',
-                labelStyle: TextStyle(fontSize: 14),
-                hintStyle: TextStyle(color: Colors.grey, fontSize: 10),
-              ),
-              style: TextStyle(fontSize: 14),
+              decoration: inputDecoration.copyWith(labelText: 'Password'),
+              style: const TextStyle(fontSize: 14),
+              validator: (String? value) {
+                password = value;
+                return validatePassword(value.toString().trim());
+              },
+              onSaved: (String? value) => password = value.toString().trim(),
             ),
-            const TextField(
+            // confirm pass
+            TextFormField(
               obscureText: true,
-              decoration: InputDecoration(
-                labelText: 'Re-enter password',
-                labelStyle: TextStyle(fontSize: 14),
-                hintStyle: TextStyle(color: Colors.grey, fontSize: 10),
-              ),
-              style: TextStyle(fontSize: 14),
+              decoration:
+                  inputDecoration.copyWith(labelText: 'Confrim Password'),
+              style: const TextStyle(fontSize: 14),
+              validator: (String? val) =>
+                  validateConfirmPassword(val.toString().trim(), password),
             ),
             const SizedBox(height: 30),
+            // create account button
             ElevatedButton(
-              onPressed: () async {},
+              onPressed: () async {
+                formKey.currentState!.validate();
+                formKey.currentState!.save();
+
+                await registerNewUser(
+                  context: context,
+                  phoneNumber: phoneNumber!,
+                  name: name!,
+                  email: email!,
+                  password: password!,
+                );
+              },
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(
                     horizontal: mediaQuery.size.width * 0.15, vertical: 15),
