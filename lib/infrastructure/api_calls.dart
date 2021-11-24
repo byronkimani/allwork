@@ -30,7 +30,6 @@ Future<void> registerNewUser({
   }
   displaytoastMessage(message: 'Account created successfully!');
 
-  print('here');
   if (userCredential != null) {
     // ignore: always_specify_types
     final CollectionReference users =
