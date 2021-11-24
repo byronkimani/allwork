@@ -1,6 +1,7 @@
 import 'package:allwork/business_logic/core/helpers.dart';
 import 'package:allwork/constants/string_constants.dart';
 import 'package:allwork/constants/theme.dart';
+import 'package:allwork/infrastructure/api_calls.dart';
 import 'package:allwork/presentation/router/routes.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,8 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   final GlobalKey<FormState> formKey = GlobalKey();
+  String? email;
+  String? password;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +34,7 @@ class _LoginFormState extends State<LoginForm> {
               style: const TextStyle(fontSize: 14),
               validator: (String? email) =>
                   validateEmail(email.toString().trim()),
+              onSaved: (String? value) => email = value.toString().trim(),
             ),
             // password
             const SizedBox(height: 10),
@@ -40,10 +44,20 @@ class _LoginFormState extends State<LoginForm> {
               style: const TextStyle(fontSize: 14),
               validator: (String? pass) =>
                   validatePassword(pass.toString().trim()),
+              onSaved: (String? value) => password = value.toString().trim(),
             ),
             const SizedBox(height: 30),
             ElevatedButton(
-              onPressed: () async {},
+              onPressed: () async {
+                if (formKey.currentState!.validate()) {
+                  formKey.currentState!.save();
+                  await signInWithEmailAndPass(
+                    context: context,
+                    email: email!,
+                    password: password!,
+                  );
+                }
+              },
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(
                     horizontal: mediaQuery.size.width * 0.3, vertical: 15),
