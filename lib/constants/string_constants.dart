@@ -14,6 +14,9 @@ const String gigWorkersImage = 'assets/images/gig_final.jpg';
 const String onboardingPageOneImage = 'assets/images/woman.jpg';
 const String onboardingPageTwoImage = 'assets/images/manandcalc.jpg';
 const String onboardingPageThreeImage = 'assets/images/womangraph.jpg';
+const String plumberImage = 'assets/images/plumber.jpg';
+const String electricianImage = 'assets/images/electrician.jpg';
+const String mechanicImage = 'assets/images/mechanic.jpg';
 
 // login page
 const String welcome = 'Welcome Back!';
