@@ -1,5 +1,5 @@
 import 'package:allwork/presentation/features/error/page_not_found.dart';
-import 'package:allwork/presentation/features/main/pages/main_screen.dart';
+import 'package:allwork/presentation/features/home/pages/home_page.dart';
 import 'package:allwork/presentation/features/mechanics/pages/mechanics_page.dart';
 import 'package:allwork/presentation/features/onboarding/pages/create_account_page.dart';
 import 'package:allwork/presentation/features/onboarding/pages/login_page.dart';
@@ -33,8 +33,8 @@ class AppRouter {
         );
 
       case mainScreenRoute:
-        return MaterialPageRoute<MainScreeen>(
-          builder: (_) => const MainScreeen(),
+        return MaterialPageRoute<HomePage>(
+          builder: (_) => const HomePage(),
         );
 
       case plumbersPageRoute:
@@ -42,8 +42,8 @@ class AppRouter {
           builder: (_) => const PlumbersPage(),
         );
       case electricianPageRoute:
-        return MaterialPageRoute<MainScreeen>(
-          builder: (_) => const MainScreeen(),
+        return MaterialPageRoute<HomePage>(
+          builder: (_) => const HomePage(),
         );
       case mechanicPageRoute:
         return MaterialPageRoute<MechanicsPage>(

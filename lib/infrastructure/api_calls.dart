@@ -1,11 +1,14 @@
 import 'package:allwork/business_logic/core/helpers.dart';
 import 'package:allwork/constants/string_constants.dart';
+import 'package:allwork/infrastructure/config_maps.dart';
+import 'package:allwork/infrastructure/dio_client.dart';
 import 'package:allwork/presentation/core/progress_dialog.dart';
 import 'package:allwork/presentation/router/routes.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 
 Future<void> registerNewUser({
   required BuildContext context,
@@ -88,13 +91,27 @@ Future<void> signInWithEmailAndPass({
     );
   } on FirebaseAuthException catch (e) {
     if (e.code == 'user-not-found') {
+      Navigator.of(context).pop();
+
       displaytoastMessage(message: 'No user found for that email.');
       return;
     } else if (e.code == 'wrong-password') {
+      Navigator.of(context).pop();
       displaytoastMessage(message: 'Wrong password provided for that user.');
       return;
     }
   }
   displaytoastMessage(message: 'Logged in successfully');
   Navigator.of(context).pushReplacementNamed(mainScreenRoute);
+}
+
+Future<String> searchCoordinateAddress(Position position) async {
+  String placeAddress = '';
+  final String url =
+      'https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.latitude},${position.longitude}&key=$mapKey2';
+  final dynamic response = await getRequest(url);
+  if (response != 'Failed') {
+    placeAddress = response['results'][0]['formatted_address'] as String;
+  }
+  return placeAddress;
 }

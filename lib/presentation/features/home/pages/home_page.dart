@@ -1,19 +1,23 @@
 import 'dart:async';
-
 import 'package:allwork/constants/string_constants.dart';
 import 'package:allwork/constants/theme.dart';
+import 'package:allwork/infrastructure/api_calls.dart';
+import 'package:allwork/presentation/features/home/widgets/home_drawer.dart';
 import 'package:allwork/presentation/router/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:geolocator/geolocator.dart';
 
-class MainScreeen extends StatefulWidget {
-  const MainScreeen();
+class HomePage extends StatefulWidget {
+  const HomePage();
 
   @override
-  State<MainScreeen> createState() => _MainScreeenState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _MainScreeenState extends State<MainScreeen> {
+class _HomePageState extends State<HomePage> {
+  Position? currentPosition;
+  Geolocator geolocator = Geolocator();
   GoogleMapController? newGoogleMapController;
 
   static const CameraPosition _cameraPosition = CameraPosition(
@@ -23,6 +27,32 @@ class _MainScreeenState extends State<MainScreeen> {
 
   final Completer<GoogleMapController> _controllerGoogleMaps =
       Completer<GoogleMapController>();
+  double bottomPaddingOfMap = 0;
+
+  Future<void> locatePosition() async {
+    final LocationPermission permission = await Geolocator.checkPermission();
+    if (permission != LocationPermission.always ||
+        permission != LocationPermission.whileInUse) {
+      final LocationPermission requestPermission =
+          await Geolocator.requestPermission();
+
+      if (!(requestPermission != LocationPermission.always ||
+          requestPermission != LocationPermission.whileInUse)) {
+        await Geolocator.openLocationSettings();
+      }
+    }
+    final Position position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+    currentPosition = position;
+    final LatLng latLngPosition = LatLng(position.latitude, position.longitude);
+    final CameraPosition cameraPosition =
+        CameraPosition(target: latLngPosition);
+
+    newGoogleMapController!
+        .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+    final String address = await searchCoordinateAddress(position);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,66 +64,21 @@ class _MainScreeenState extends State<MainScreeen> {
       drawer: Container(
         color: whiteColor,
         width: 255,
-        child: Drawer(
-          child: ListView(
-            children: <Widget>[
-              SizedBox(
-                height: 165,
-                width: double.infinity,
-                child: DrawerHeader(
-                  decoration: const BoxDecoration(color: Colors.grey),
-                  child: Column(
-                    children: const <Widget>[
-                      Icon(Icons.account_circle, size: 50),
-                      Text('John Doe'),
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Row(
-                      children: const <Widget>[
-                        Icon(Icons.attach_money),
-                        SizedBox(width: 10),
-                        Text('Payment'),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    Row(
-                      children: const <Widget>[
-                        Icon(Icons.account_circle),
-                        SizedBox(width: 10),
-                        Text('Account'),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    Row(
-                      children: const <Widget>[
-                        Icon(Icons.settings),
-                        SizedBox(width: 10),
-                        Text('Settings'),
-                      ],
-                    ),
-                    // TextButton(onPressed: () {}, child: Text('SIGN OUT'))
-                  ],
-                ),
-              )
-            ],
-          ),
-        ),
+        child: const HomeDrawer(),
       ),
       body: Stack(
         children: <Widget>[
           GoogleMap(
+            padding: EdgeInsets.only(bottom: bottomPaddingOfMap),
+            myLocationEnabled: true,
             initialCameraPosition: _cameraPosition,
             onMapCreated: (GoogleMapController controller) {
               _controllerGoogleMaps.complete(controller);
               newGoogleMapController = controller;
+              setState(() {
+                bottomPaddingOfMap = 250;
+              });
+              locatePosition();
             },
           ),
           Positioned(
@@ -101,7 +86,7 @@ class _MainScreeenState extends State<MainScreeen> {
             right: 0,
             bottom: 0,
             child: Container(
-              height: 245,
+              height: 250,
               decoration: const BoxDecoration(
                 color: whiteColor,
                 borderRadius: BorderRadius.only(
@@ -140,9 +125,7 @@ class _MainScreeenState extends State<MainScreeen> {
                             children: <Widget>[
                               const SizedBox(
                                 height: 100,
-                                child: Image(
-                                  image: AssetImage(plumberImage),
-                                ),
+                                child: Image(image: AssetImage(plumberImage)),
                               ),
                               TextButton(
                                 onPressed: () {
@@ -163,9 +146,8 @@ class _MainScreeenState extends State<MainScreeen> {
                               const SizedBox(
                                 height: 100,
                                 width: 120,
-                                child: Image(
-                                  image: AssetImage(electricianImage),
-                                ),
+                                child:
+                                    Image(image: AssetImage(electricianImage)),
                               ),
                               TextButton(
                                 onPressed: () {},
@@ -182,9 +164,7 @@ class _MainScreeenState extends State<MainScreeen> {
                             children: <Widget>[
                               const SizedBox(
                                 height: 100,
-                                child: Image(
-                                  image: AssetImage(mechanicImage),
-                                ),
+                                child: Image(image: AssetImage(mechanicImage)),
                               ),
                               TextButton(
                                 onPressed: () {},
