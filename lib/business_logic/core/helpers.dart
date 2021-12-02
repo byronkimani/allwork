@@ -1,5 +1,10 @@
+import 'package:allwork/business_logic/core/data_handlers/models/user.dart';
 import 'package:allwork/constants/string_constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+
+User? firebaseUser;
+Users? userCurrentInfo;
 
 String? validateEmail(String? input) {
   if (input != null || input!.isNotEmpty) {
