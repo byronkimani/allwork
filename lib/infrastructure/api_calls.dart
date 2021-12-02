@@ -1,3 +1,6 @@
+import 'package:allwork/business_logic/core/data_handlers/app_data.dart';
+import 'package:allwork/business_logic/core/data_handlers/models/address.dart';
+import 'package:allwork/business_logic/core/data_handlers/models/user.dart';
 import 'package:allwork/business_logic/core/helpers.dart';
 import 'package:allwork/constants/string_constants.dart';
 import 'package:allwork/infrastructure/config_maps.dart';
@@ -9,6 +12,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:provider/provider.dart';
 
 Future<void> registerNewUser({
   required BuildContext context,
@@ -105,13 +109,38 @@ Future<void> signInWithEmailAndPass({
   Navigator.of(context).pushReplacementNamed(mainScreenRoute);
 }
 
-Future<String> searchCoordinateAddress(Position position) async {
+Future<String> searchCoordinateAddress(
+    {required Position position, required BuildContext context}) async {
   String placeAddress = '';
   final String url =
       'https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.latitude},${position.longitude}&key=$mapKey2';
   final dynamic response = await getRequest(url);
   if (response != 'Failed') {
     placeAddress = response['results'][0]['formatted_address'] as String;
+    final Address userAddress = Address(
+      longitude: position.longitude,
+      latitude: position.latitude,
+      formattedAddress: placeAddress,
+    );
+
+    Provider.of<AppData>(context, listen: false)
+        .updateUserLocation(userAddress);
   }
   return placeAddress;
+}
+
+Future<void> getCurrentLoggedOnUserInfo() async {
+  firebaseUser = FirebaseAuth.instance.currentUser;
+  final String userId = firebaseUser!.uid;
+  FirebaseFirestore.instance
+      .collection('users')
+      .doc(userId)
+      .get()
+      .then((DocumentSnapshot<Object?> documentSnapshot) {
+    if (documentSnapshot.exists) {
+      userCurrentInfo = Users.fromSnapshot(documentSnapshot);
+    } else {
+      print('Document does not exist on the database');
+    }
+  });
 }

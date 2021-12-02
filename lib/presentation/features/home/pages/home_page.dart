@@ -4,6 +4,7 @@ import 'package:allwork/constants/theme.dart';
 import 'package:allwork/infrastructure/api_calls.dart';
 import 'package:allwork/presentation/features/home/widgets/home_drawer.dart';
 import 'package:allwork/presentation/router/routes.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
@@ -51,7 +52,20 @@ class _HomePageState extends State<HomePage> {
 
     newGoogleMapController!
         .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
-    final String address = await searchCoordinateAddress(position);
+    final String address =
+        await searchCoordinateAddress(position: position, context: context);
+  }
+
+   CollectionReference users = FirebaseFirestore.instance.collection('serviceRequests');
+
+  @override
+  void initState() {
+    super.initState();
+    getCurrentLoggedOnUserInfo();
+  }
+
+  void saveServiceRequest(){
+
   }
 
   @override

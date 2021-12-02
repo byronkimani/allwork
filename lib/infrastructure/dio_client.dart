@@ -5,7 +5,6 @@ Future<dynamic> getRequest(String url) async {
     final Response<dynamic> response = await Dio().get(url);
     return response.data;
   } catch (e) {
-    print('feiled');
     return 'Failed';
   }
 }
