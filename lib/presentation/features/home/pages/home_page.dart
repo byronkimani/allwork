@@ -56,7 +56,8 @@ class _HomePageState extends State<HomePage> {
         await searchCoordinateAddress(position: position, context: context);
   }
 
-   CollectionReference users = FirebaseFirestore.instance.collection('serviceRequests');
+  CollectionReference<Object?> users =
+      FirebaseFirestore.instance.collection('serviceRequests');
 
   @override
   void initState() {
@@ -64,9 +65,7 @@ class _HomePageState extends State<HomePage> {
     getCurrentLoggedOnUserInfo();
   }
 
-  void saveServiceRequest(){
-
-  }
+  void saveServiceRequest() {}
 
   @override
   Widget build(BuildContext context) {
