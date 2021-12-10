@@ -1,3 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 import 'package:allwork/business_logic/core/data_handlers/app_data.dart';
 import 'package:allwork/business_logic/core/data_handlers/models/address.dart';
 import 'package:allwork/business_logic/core/data_handlers/models/user.dart';
@@ -7,12 +12,6 @@ import 'package:allwork/infrastructure/config_maps.dart';
 import 'package:allwork/infrastructure/dio_client.dart';
 import 'package:allwork/presentation/core/progress_dialog.dart';
 import 'package:allwork/presentation/router/routes.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:provider/provider.dart';
 
 Future<void> registerNewUser({
   required BuildContext context,
