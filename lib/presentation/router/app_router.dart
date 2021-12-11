@@ -32,7 +32,7 @@ class AppRouter {
           builder: (_) => const CreateAccountPage(),
         );
 
-      case mainScreenRoute:
+      case homePageRoute:
         return MaterialPageRoute<HomePage>(
           builder: (_) => const HomePage(),
         );
