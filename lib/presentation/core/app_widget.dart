@@ -3,6 +3,8 @@ import 'package:allwork/constants/string_constants.dart';
 import 'package:allwork/constants/theme.dart';
 import 'package:allwork/presentation/features/onboarding/pages/welcome_page.dart';
 import 'package:allwork/presentation/router/app_router.dart';
+import 'package:allwork/presentation/router/routes.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +23,9 @@ class _AppWidgetState extends State<AppWidget> {
       child: MaterialApp(
         title: appName,
         theme: apptheme,
-        home: const WelcomePage(),
+        initialRoute: FirebaseAuth.instance.currentUser == null
+            ? loginPageRoute
+            : homePageRoute,
         onGenerateRoute: appRouter.onGenerateRoute,
       ),
     );

@@ -64,7 +64,7 @@ Future<void> registerNewUser({
     }).then(
       (_) {
         displaytoastMessage(message: accountCreatedSuccess);
-        Navigator.of(context).pushReplacementNamed(mainScreenRoute);
+        Navigator.of(context).pushReplacementNamed(homePageRoute);
       },
     ).catchError(
       (dynamic error) {
@@ -105,11 +105,13 @@ Future<void> signInWithEmailAndPass({
     }
   }
   displaytoastMessage(message: 'Logged in successfully');
-  Navigator.of(context).pushReplacementNamed(mainScreenRoute);
+  Navigator.of(context).pushReplacementNamed(homePageRoute);
 }
 
-Future<String> searchCoordinateAddress(
-    {required Position position, required BuildContext context}) async {
+Future<String> searchCoordinateAddress({
+  required Position position,
+  required BuildContext context,
+}) async {
   String placeAddress = '';
   final String url =
       'https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.latitude},${position.longitude}&key=$mapKey2';

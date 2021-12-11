@@ -1,5 +1,7 @@
 import 'package:allwork/constants/string_constants.dart';
 import 'package:allwork/constants/theme.dart';
+import 'package:allwork/presentation/router/routes.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomeDrawer extends StatelessWidget {
@@ -70,7 +72,11 @@ class HomeDrawer extends StatelessWidget {
           Align(
             alignment: Alignment.bottomCenter,
             child: TextButton(
-              onPressed: () {},
+              onPressed: () {
+                FirebaseAuth.instance.signOut();
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    loginPageRoute, (Route<dynamic> route) => false);
+              },
               child: const Text(
                 'SIGN OUT',
                 style: TextStyle(color: Colors.redAccent),
