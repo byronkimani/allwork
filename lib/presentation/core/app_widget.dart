@@ -1,7 +1,6 @@
 import 'package:allwork/business_logic/core/data_handlers/app_data.dart';
 import 'package:allwork/constants/string_constants.dart';
 import 'package:allwork/constants/theme.dart';
-import 'package:allwork/presentation/features/onboarding/pages/welcome_page.dart';
 import 'package:allwork/presentation/router/app_router.dart';
 import 'package:allwork/presentation/router/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
