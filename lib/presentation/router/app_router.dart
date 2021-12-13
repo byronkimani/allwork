@@ -41,10 +41,12 @@ class AppRouter {
         return MaterialPageRoute<PlumbersPage>(
           builder: (_) => const PlumbersPage(),
         );
+
       case electricianPageRoute:
         return MaterialPageRoute<HomePage>(
           builder: (_) => const HomePage(),
         );
+
       case mechanicPageRoute:
         return MaterialPageRoute<MechanicsPage>(
           builder: (_) => const MechanicsPage(),
