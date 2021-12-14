@@ -131,6 +131,7 @@ Future<void> getCurrentLoggedOnUserInfo() async {
   final DatabaseReference ref =
       FirebaseDatabase.instance.ref().child('users/$userId');
 
-  final DatabaseEvent event = await ref.once();
-  Users.fromSnapshot(event.snapshot);
+  await ref.once().then((DatabaseEvent databaseEvent) async {
+    final Users users = Users.fromSnapshot(databaseEvent.snapshot);
+  });
 }

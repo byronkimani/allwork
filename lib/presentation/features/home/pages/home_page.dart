@@ -51,8 +51,8 @@ class _HomePageState extends State<HomePage> {
 
     newGoogleMapController!
         .animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
-    final String address =
-        await searchCoordinateAddress(position: position, context: context);
+    // final String address =
+    //     await searchCoordinateAddress(position: position, context: context);
   }
 
   @override

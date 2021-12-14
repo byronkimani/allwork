@@ -72,8 +72,8 @@ class HomeDrawer extends StatelessWidget {
           Align(
             alignment: Alignment.bottomCenter,
             child: TextButton(
-              onPressed: () {
-                FirebaseAuth.instance.signOut();
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
                 Navigator.of(context).pushNamedAndRemoveUntil(
                     loginPageRoute, (Route<dynamic> route) => false);
               },
