@@ -1,17 +1,20 @@
+import 'package:allwork/business_logic/core/data_handlers/models/users.dart';
+import 'package:allwork/constants/string_constants.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:allwork/business_logic/core/data_handlers/app_data.dart';
 import 'package:allwork/business_logic/core/data_handlers/models/address.dart';
-import 'package:allwork/business_logic/core/data_handlers/models/user.dart';
 import 'package:allwork/business_logic/core/helpers.dart';
-import 'package:allwork/constants/string_constants.dart';
 import 'package:allwork/infrastructure/config_maps.dart';
 import 'package:allwork/infrastructure/dio_client.dart';
 import 'package:allwork/presentation/core/progress_dialog.dart';
 import 'package:allwork/presentation/router/routes.dart';
+
+final DatabaseReference usersRef =
+    FirebaseDatabase.instance.ref().child('users');
 
 Future<void> registerNewUser({
   required BuildContext context,
@@ -54,23 +57,15 @@ Future<void> registerNewUser({
   displaytoastMessage(message: 'Account created successfully!');
 
   if (userCredential != null) {
-    // ignore: always_specify_types
-    final CollectionReference users =
-        FirebaseFirestore.instance.collection('users');
-    users.doc(userCredential.user!.uid).set(<String, dynamic>{
+    final Map<String, dynamic> userData = <String, dynamic>{
       'name': name,
       'phoneNumber': phoneNumber,
       'email': email,
-    }).then(
-      (_) {
-        displaytoastMessage(message: accountCreatedSuccess);
-        Navigator.of(context).pushReplacementNamed(homePageRoute);
-      },
-    ).catchError(
-      (dynamic error) {
-        displaytoastMessage(message: 'Failed to add user');
-      },
-    );
+    };
+
+    usersRef.child(userCredential.user!.uid).set(userData);
+    displaytoastMessage(message: accountCreatedSuccess);
+    Navigator.of(context).pushReplacementNamed(homePageRoute);
   } else {
     displaytoastMessage(message: 'New user account not created');
   }
@@ -133,15 +128,9 @@ Future<String> searchCoordinateAddress({
 Future<void> getCurrentLoggedOnUserInfo() async {
   firebaseUser = FirebaseAuth.instance.currentUser;
   final String userId = firebaseUser!.uid;
-  FirebaseFirestore.instance
-      .collection('users')
-      .doc(userId)
-      .get()
-      .then((DocumentSnapshot<Object?> documentSnapshot) {
-    if (documentSnapshot.exists) {
-      userCurrentInfo = Users.fromSnapshot(documentSnapshot);
-    } else {
-      print('Document does not exist on the database');
-    }
-  });
+  final DatabaseReference ref =
+      FirebaseDatabase.instance.ref().child('users/$userId');
+
+  final DatabaseEvent event = await ref.once();
+  Users.fromSnapshot(event.snapshot);
 }
